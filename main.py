@@ -45,34 +45,6 @@ def organize_files():
     print("File Organizer started!")
 
     files = os.listdir(TARGET_FOLDER)
-
-    for file in files:
-        file_path = os.path.join(TARGET_FOLDER, file)
-
-        if os.path.isdir(file_path):
-            continue
-
-        file_name, file_extension = os.path.splitext(file)
-
-        category_found = get_category(file_extension)
-
-        category_folder = os.path.join(TARGET_FOLDER, category_found)
-
-        if not os.path.exists(category_folder):
-            os.makedirs(category_folder)
-
-        destination_path = os.path.join(category_folder, file)
-        destination_path = get_unique_path(destination_path)
-
-        shutil.move(file_path, destination_path)
-
-        print(f"Moved: {file} -> {category_found}")
-
-
-if __name__ == "__main__":
-    organize_files()
-
-    files = os.listdir(TARGET_FOLDER)
     moved_files = 0
 
     for file in files:
@@ -103,3 +75,7 @@ if __name__ == "__main__":
         print("No files to organize.")
     else:
         print(f"Done! {moved_files} file(s) organized.")
+
+
+if __name__ == "__main__":
+    organize_files()
