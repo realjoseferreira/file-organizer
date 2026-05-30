@@ -1,7 +1,6 @@
 import os
 import shutil
-
-TARGET_FOLDER = "test_folder"
+import sys
 
 CATEGORIES = {
     "Images": [".jpg", ".jpeg", ".png", ".gif", ".webp"],
@@ -11,6 +10,24 @@ CATEGORIES = {
     "Audios": [".mp3", ".wav"],
     "Compressed": [".zip", ".rar", ".7z"],
 }
+
+
+def get_target_folder():
+    if len(sys.argv) < 2:
+        print("Usage: py main.py <folder_path>")
+        sys.exit(1)
+
+    target_folder = sys.argv[1]
+
+    if not os.path.exists(target_folder):
+        print(f"Error: folder not found: {target_folder}")
+        sys.exit(1)
+
+    if not os.path.isdir(target_folder):
+        print(f"Error: path is not a folder: {target_folder}")
+        sys.exit(1)
+
+    return target_folder
 
 
 def get_category(file_extension):
@@ -41,14 +58,14 @@ def get_unique_path(destination_path):
         counter += 1
 
 
-def organize_files():
+def organize_files(target_folder):
     print("File Organizer started!")
 
-    files = os.listdir(TARGET_FOLDER)
+    files = os.listdir(target_folder)
     moved_files = 0
 
     for file in files:
-        file_path = os.path.join(TARGET_FOLDER, file)
+        file_path = os.path.join(target_folder, file)
 
         if os.path.isdir(file_path):
             continue
@@ -57,7 +74,7 @@ def organize_files():
 
         category_found = get_category(file_extension)
 
-        category_folder = os.path.join(TARGET_FOLDER, category_found)
+        category_folder = os.path.join(target_folder, category_found)
 
         if not os.path.exists(category_folder):
             os.makedirs(category_folder)
@@ -78,4 +95,5 @@ def organize_files():
 
 
 if __name__ == "__main__":
-    organize_files()
+    folder = get_target_folder()
+    organize_files(folder)
