@@ -69,4 +69,5 @@ def organize_files():
         print(f"Moved: {file} -> {category_found}")
 
 
-organize_files()
+if __name__ == "__main__":
+    organize_files()
