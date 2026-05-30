@@ -1,4 +1,5 @@
 import os
+import shutil
 
 TARGET_FOLDER = "test_folder"
 
@@ -16,6 +17,11 @@ print("File Organizer started!")
 files = os.listdir(TARGET_FOLDER)
 
 for file in files:
+    file_path = os.path.join(TARGET_FOLDER, file)
+
+    if os.path.isdir(file_path):
+        continue
+
     file_name, file_extension = os.path.splitext(file)
 
     category_found = "Others"
@@ -25,8 +31,12 @@ for file in files:
             category_found = category
 
     category_folder = os.path.join(TARGET_FOLDER, category_found)
-    
-    if not os.path.exists (category_folder):
+
+    if not os.path.exists(category_folder):
         os.makedirs(category_folder)
 
-    print(f"File: {file} | Category: {category_found}")
+    destination_path = os.path.join(category_folder, file)
+
+    shutil.move(file_path, destination_path)
+
+    print(f"Moved: {file} -> {category_found}")
