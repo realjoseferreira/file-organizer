@@ -24,4 +24,9 @@ for file in files:
         if file_extension.lower() in extensions:
             category_found = category
 
+    category_folder = os.path.join(TARGET_FOLDER, category_found)
+    
+    if not os.path.exists (category_folder):
+        os.makedirs(category_folder)
+
     print(f"File: {file} | Category: {category_found}")
