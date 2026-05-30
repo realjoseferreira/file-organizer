@@ -18,10 +18,10 @@ files = os.listdir(TARGET_FOLDER)
 for file in files:
     file_name, file_extension = os.path.splitext(file)
 
-category_found = "Others"
+    category_found = "Others"
 
-for category, extensions in CATEGORIES.items():
-    if file_extension.lower() in extensions:
-        category_found = category
+    for category, extensions in CATEGORIES.items():
+        if file_extension.lower() in extensions:
+            category_found = category
 
-        print(f"File: {file} | Category: {category_found}")
+    print(f"File: {file} | Category: {category_found}")
