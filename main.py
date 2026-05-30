@@ -12,6 +12,27 @@ CATEGORIES = {
     "Compressed": [".zip", ".rar", ".7z"],
 }
 
+
+def get_unique_path(destination_path):
+    if not os.path.exists(destination_path):
+        return destination_path
+
+    folder = os.path.dirname(destination_path)
+    file_name = os.path.basename(destination_path)
+    name, extension = os.path.splitext(file_name)
+
+    counter = 1
+
+    while True:
+        new_file_name = f"{name}_{counter}{extension}"
+        new_path = os.path.join(folder, new_file_name)
+
+        if not os.path.exists(new_path):
+            return new_path
+
+        counter += 1
+
+
 print("File Organizer started!")
 
 files = os.listdir(TARGET_FOLDER)
@@ -36,6 +57,7 @@ for file in files:
         os.makedirs(category_folder)
 
     destination_path = os.path.join(category_folder, file)
+    destination_path = get_unique_path(destination_path)
 
     shutil.move(file_path, destination_path)
 
