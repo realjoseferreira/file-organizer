@@ -1,6 +1,7 @@
 import os
 import shutil
 import argparse
+from datetime import datetime
 
 CATEGORIES = {
     "Images": [".jpg", ".jpeg", ".png", ".gif", ".webp"],
@@ -65,8 +66,16 @@ def get_unique_path(destination_path):
 
 
 def write_log(message):
-    with open("organization_log.txt", "a", encoding="utf-8") as log_file:
-        log_file.write(message + "\n")
+    logs_folder = "logs"
+
+    if not os.path.exists(logs_folder):
+        os.makedirs(logs_folder)
+
+    log_path = os.path.join(logs_folder, "organization_log.txt")
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    with open(log_path, "a", encoding="utf-8") as log_file:
+        log_file.write(f"[{current_time}] {message}\n")
 
 
 def organize_files(target_folder):
