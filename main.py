@@ -1,6 +1,6 @@
 import os
 import shutil
-import sys
+import argparse
 
 CATEGORIES = {
     "Images": [".jpg", ".jpeg", ".png", ".gif", ".webp"],
@@ -13,19 +13,25 @@ CATEGORIES = {
 
 
 def get_target_folder():
-    if len(sys.argv) < 2:
-        print("Usage: py main.py <folder_path>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description="Organize files into folders based on their extensions."
+    )
 
-    target_folder = sys.argv[1]
+    parser.add_argument(
+        "folder_path",
+        help="Path to the folder you want to organize"
+    )
+
+    args = parser.parse_args()
+    target_folder = args.folder_path
 
     if not os.path.exists(target_folder):
         print(f"Error: folder not found: {target_folder}")
-        sys.exit(1)
+        exit(1)
 
     if not os.path.isdir(target_folder):
         print(f"Error: path is not a folder: {target_folder}")
-        sys.exit(1)
+        exit(1)
 
     return target_folder
 
