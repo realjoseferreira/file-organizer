@@ -64,8 +64,15 @@ def get_unique_path(destination_path):
         counter += 1
 
 
+def write_log(message):
+    with open("organization_log.txt", "a", encoding="utf-8") as log_file:
+        log_file.write(message + "\n")
+
+
 def organize_files(target_folder):
-    print("File Organizer started!")
+    start_message = "File Organizer started!"
+    print(start_message)
+    write_log(start_message)
 
     files = os.listdir(target_folder)
     moved_files = 0
@@ -92,12 +99,18 @@ def organize_files(target_folder):
 
         moved_files += 1
 
-        print(f"Moved: {file} -> {category_found}")
+        message = f"Moved: {file} -> {category_found}"
+        print(message)
+        write_log(message)
 
     if moved_files == 0:
-        print("No files to organize.")
+        message = "No files to organize."
+        print(message)
+        write_log(message)
     else:
-        print(f"Done! {moved_files} file(s) organized.")
+        message = f"Done! {moved_files} file(s) organized."
+        print(message)
+        write_log(message)
 
 
 if __name__ == "__main__":
